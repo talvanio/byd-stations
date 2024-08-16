@@ -1,43 +1,64 @@
 #include "../include/Station.hpp"
 #include "utils.cpp"
 
-class Station {
-public:
-    // Construtor:
-    Station(std::string _adress,double _x, double _y) 
-    {
-        status = 'A';
-        adress = _adress;
-        x = _x;
-        y = _y;
-    };
+// Construtor:
+Station::Station(std::string _address,double _x, double _y) 
+{
+    status = 'A';
+    address = _address;
+    x = _x;
+    y = _y;
+};
 
 
-    std::string ativar() {
-        status = 'A';
-    };
+void Station::ativar() 
+{
+    status = 'A';
+};
 
-    std::string desativar() {
-        status = 'D';
-    };
+void Station::desativar() {
+    status = 'D';
+};
 
 
-    // Getters:
-    char getStatus() { return status; };
-    std::string getAdress() { return adress; };
-    double getX() { return x; };
-    double getY() { return y; };
+// Getters e Setters:
 
-    // Setters:
-    void setStatus(char _status) { status = _status; };
-    void setAdress(std::string _adress) { adress = _adress; };
-    void setX(double _x) { x = _x; };
-    void setY(double _y) { y = _y; };
+// Status
+char Station::getStatus() 
+{ 
+    return status; 
+};
+void Station::setStatus(char _status) 
+{ 
+    status = _status; 
+};
 
-private:
-    char status;
-    std::string adress;
-    double x;
-    double y;
+// Address
+std::string Station::getAddress() 
+{ 
+    return address; 
+};
+void Station::setAddress(std::string _address) 
+{ 
+    address = _address; 
+};
 
+//X
+double Station::getX() 
+{ 
+    return x; 
+};
+void Station::setX(double _x) 
+{ 
+    x = _x; 
+};
+
+//Y
+double Station::getY() 
+{ 
+    return y; 
+};
+void Station::setY(double _y) 
+{ 
+    y = _y; 
 };

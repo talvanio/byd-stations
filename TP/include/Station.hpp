@@ -7,25 +7,25 @@
 
 class Station {
 public:
-    Station(std::string _adress,double _x, double _y);
+    Station(std::string _address,double _x, double _y);
 
-    std::string ativar();
-    std::string desativar();
+    void ativar();
+    void desativar();
 
     char getStatus();
-    char* getAdress();
+    std::string getAddress();
     double getX();
     double getY();
 
     void setStatus(char _status);
-    void setAdress(std::string _adress);
+    void setAddress(std::string _address);
 
     void setX(double _x);
     void setY(double _y);
 
 private:
     char status;
-    std::string adress;
+    std::string address;
     double x;
     double y;
 
