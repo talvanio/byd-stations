@@ -1,43 +1,64 @@
 #include "../include/Station.hpp"
-#include "utils.cpp"
+#include "../include/utils.hpp"
 
-class Station {
-public:
-    // Construtor:
-    Station(std::string _adress,double _x, double _y) 
+// Construtores:
+
+Station::Station()
+{
+    status = 'A';
+};
+Station::Station(std::string _address, double _x, double _y)
+{
+    status = 'A';
+    address = _address;
+    x = _x;
+    y = _y;
+};
+
+std::string Station::ativar()
+{
+    std::string res = "Ponto de recarga ";
+    res.append(id);
+    if(status == 'A')
+    {
+        res.append(" já estava ativo.");
+    }
+    else
     {
         status = 'A';
-        adress = _adress;
-        x = _x;
-        y = _y;
-    };
-
-
-    std::string ativar() {
-        status = 'A';
-    };
-
-    std::string desativar() {
-        status = 'D';
-    };
-
-
-    // Getters:
-    char getStatus() { return status; };
-    std::string getAdress() { return adress; };
-    double getX() { return x; };
-    double getY() { return y; };
-
-    // Setters:
-    void setStatus(char _status) { status = _status; };
-    void setAdress(std::string _adress) { adress = _adress; };
-    void setX(double _x) { x = _x; };
-    void setY(double _y) { y = _y; };
-
-private:
-    char status;
-    std::string adress;
-    double x;
-    double y;
-
+        res.append(" ativado.");
+    }
+    return res;
 };
+
+std::string Station::desativar()
+{
+    std::string res = "Ponto de recarga ";
+    res.append(id);
+    if(status == 'D')
+    {
+        res.append(" já estava desativado.");
+    }
+    else
+    {
+        status = 'D';
+        res.append(" desativado.");
+    }
+    return res;
+};
+
+// Getters e Setters:
+char Station::getStatus() { return status; };
+void Station::setStatus(char _status) { status = _status; };
+
+std::string Station::getAddress() { return address; };
+void Station::setAddress(std::string _address) { address = _address; };
+
+double Station::getX() { return x; };
+void Station::setX(double _x) { x = _x; };
+
+double Station::getY() { return y; };
+void Station::setY(double _y) { y = _y; };
+
+std::string Station::getId() { return id; };
+void Station::setId(std::string _id) { id = _id; };
