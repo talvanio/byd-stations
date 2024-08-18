@@ -17,21 +17,20 @@ public:
 
     // Getters e setters:
     void setStatus(char _status);
-    char getStatus();
+    char getStatus() const;
 
 
     void setAddress(std::string _address);
-    std::string getAddress();
+    std::string getAddress() const;
 
     void setX(double _x);
-    double getX();
+    double getX() const;
 
     void setY(double _y);
-    double getY();
-
+    double getY() const;
 
     void setId(std::string _id);
-    std::string getId();
+     std::string getId() const;
 
 
 

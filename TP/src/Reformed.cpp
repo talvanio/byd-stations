@@ -1,10 +1,11 @@
 #include "../include/Reformed.hpp"
+#include "../include/heap.hpp"
 #include "utils.hpp"
 #include <fstream>
 #include <sstream>
 
 Reformed::Reformed(int numberOfStations)
-    : stations(numberOfStations),numberOfStations(numberOfStations),stationsHashTable(numberOfStations)
+    : stations(numberOfStations), numberOfStations(numberOfStations), stationsHashTable(numberOfStations)
 {
 }
 
@@ -18,6 +19,45 @@ std::string Reformed::deactivateById(std::string stationId)
     return stationsHashTable.desativar(stationId);
 }
 
+void Reformed::findKNearestNeighbors(ptr_knn_t res, double originX, double originY, int kmax)
+{
+
+    Heap pq(kmax);
+    for (int i = 1; i < numberOfStations; i++)
+    {
+        // Verifica usando a HashTable se a estacao está ativa:
+        ElementoTabela station = stationsHashTable.getElement(stations.getNode(i).data.getId());
+        // std::cout<<station.status<<std::endl;
+        if(station.status == 'D') continue;
+
+        const Node &node = stations.getNode(i);
+        if (node.isOcuppied)
+        {
+            knn_t tempDistance;
+            tempDistance.destiny = node.data;
+
+            tempDistance.dist = dist(originX, originY, node.data.getX(), node.data.getY());
+            if (pq.getTamanho() < kmax)
+            {
+                pq.Inserir(tempDistance);
+            }
+            else if (tempDistance.dist < pq.top().dist)
+            {
+                pq.Remover();
+                pq.Inserir(tempDistance);
+            }
+        }
+
+    }
+
+    int index = kmax-1;
+    while(!pq.Vazio() && index >= 0 )
+    {
+        res[index] = pq.Remover();
+        index--;
+    }
+
+}
 
 void Reformed::getStationsFromFile(std::ifstream &stationsDataFile)
 {
@@ -72,4 +112,5 @@ void Reformed::setNumberOfStations(int _numberOfStations)
 }
 
 Reformed::~Reformed()
-{}
+{
+}

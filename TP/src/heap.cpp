@@ -14,9 +14,19 @@ Heap::Heap(int maxsize)
     this->data = new knn_t[maxsize];
 }
 
+knn_t Heap::top() 
+{
+    return data[0];
+}
+
 Heap::~Heap()
 {
     delete[] data;
+}
+
+int Heap::getTamanho()
+{
+    return tamanho;
 }
 
 int Heap::GetAncestral(int posicao)
@@ -71,10 +81,10 @@ bool Heap::Vazio()
 
 void Heap::HeapifyPorBaixo(int posicao)
 {
-    while (posicao > 0 && data[posicao].dist < data[(posicao - 1) / 2].dist)
+    while (posicao > 0 && data[posicao].dist > data[(posicao - 1) / 2].dist)
     {
-        swap(posicao, (posicao - 1) / 2,this->data);
-        posicao = (posicao-1) / 2;
+        swap(posicao, (posicao - 1) / 2, this->data);
+        posicao = (posicao - 1) / 2;
     }
 }
 
@@ -83,23 +93,23 @@ void Heap::HeapifyPorCima(int posicao)
     while (2 * posicao + 1 < tamanho)
     {
         // Encontrando o menor filho para garantir a comparação do item com os dois filhos.
-        int IndexDoMenorFilho = posicao * 2 + 1;
+        int IndexDoMaiorFilho = posicao * 2 + 1;
 
-        if (IndexDoMenorFilho + 1 < tamanho && GetSucessorDir(posicao) < GetSucessorEsq(posicao))
+        if (IndexDoMaiorFilho + 1 < tamanho && data[IndexDoMaiorFilho].dist < data[IndexDoMaiorFilho + 1].dist)
         {
-            IndexDoMenorFilho = posicao * 2 + 2;
+            IndexDoMaiorFilho = posicao * 2 + 2;
         }
         // Item é menor do que seus filhos (Está no local correto):
-        if (data[posicao].dist < data[IndexDoMenorFilho].dist)
+        if (data[posicao].dist >= data[IndexDoMaiorFilho].dist)
         {
             break;
         }
         // Item não está no local correto:
         else
         {
-            swap(posicao, IndexDoMenorFilho,this->data);
+            swap(posicao, IndexDoMaiorFilho,this->data);
         }
-        posicao = IndexDoMenorFilho;
+        posicao = IndexDoMaiorFilho;
     }
 };
 

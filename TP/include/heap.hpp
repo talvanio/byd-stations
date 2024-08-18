@@ -14,10 +14,11 @@ class Heap{
 
         void Inserir(knn_t x);
         knn_t Remover();
-
+        knn_t top();
         //Retorna true caso o heap esteja vazio, false caso contrário.
         bool Vazio();
 
+        int getTamanho();
     private:
         int GetAncestral(int posicao);
         int GetSucessorEsq(int posicao);

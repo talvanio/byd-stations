@@ -15,7 +15,7 @@ public:
   void printmap(ptr_knn_t kvet, int kmax, int numberOfStations, double originX, double originY);
 
   // qsort comparison function between distances to recharging locations
-  void calculateDistances(ptr_knn_t res, double originX, double originY, int kmax);
+  void findKNearestNeighbors(ptr_knn_t res, double originX, double originY, int kmax);
 
   void getStationsFromFile(std::ifstream &stationsDataFile);
 

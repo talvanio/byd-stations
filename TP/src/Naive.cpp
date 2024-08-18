@@ -50,7 +50,7 @@ Naive::Naive()
 {
 }
 
-void Naive::calculateDistances(ptr_knn_t res, double originX, double originY, int kmax)
+void Naive::findKNearestNeighbors(ptr_knn_t res, double originX, double originY, int kmax)
 {
   ptr_knn_t distancesVector = new knn_t[numberOfStations];
 

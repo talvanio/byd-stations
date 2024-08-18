@@ -2,6 +2,7 @@
 #define REFORMED_HPP
 #include "QuadTree.hpp"
 #include "Set.hpp"
+#include "utils.hpp"
 class Reformed
 {
 public:
@@ -10,6 +11,7 @@ public:
     void getStationsFromFile(std::ifstream &stationsDataFile);
     std::string activateById(std::string stationId);
     std::string deactivateById(std::string stationId);
+    void findKNearestNeighbors(ptr_knn_t res, double originX, double originY, int kmax);
 
     void printQuadTree();
     int getNumberOfStations();

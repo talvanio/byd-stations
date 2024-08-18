@@ -4,13 +4,15 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-typedef struct s_table_elem{
-    string dado;
-    char status;
-    bool vazio;
-    bool retirada;
+class ElementoTabela{
+    public:
+        ElementoTabela();
+        string dado;
+        char status;
+        bool vazio;
+        bool retirada;
 
-} ElementoTabela;
+};
 
 class StringSet{
 
@@ -21,6 +23,7 @@ class StringSet{
         string ativar(string s);
         string desativar(string s);
 
+        ElementoTabela getElement(string s);
 
         void Inserir(string s);
         void Remover(string s);
@@ -33,7 +36,6 @@ class StringSet{
         void Imprimir();
 
     private:
-        int tamanhoOriginal;
         int tamanhoTabela;
         int tamanhoConjunto;
         ElementoTabela* tabela;

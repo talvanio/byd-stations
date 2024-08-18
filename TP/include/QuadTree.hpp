@@ -3,17 +3,6 @@
 #include "../include/QuadTree.hpp"
 #include "../include/Station.hpp"
 
-class Rect
-{
-    public:
-        Rect();
-        Rect(double x,double y,double width,double height);
-        float x,y,width,height;
-        bool contains(float x, float y);
-        bool intersects(const Rect& r);
-
-};
-
 class Node 
 {
     public:
@@ -43,9 +32,9 @@ class QuadTree
 
         void setCapacity(int _capacity);
         int getCapacity();
+        Node getNode(int nodeIndex);
 
     private:
-        Rect boundary;
         Node* qtnodes;
         int size;
         int capacity;

@@ -3,36 +3,28 @@
 
 #include "../include/QuadTree.hpp"
 
-Rect::Rect() {};
-
-Rect::Rect(double _x, double _y, double _width, double _height)
-{
-    x = _x;
-    y = _y;
-    width = _width;
-    height = _height;
-};
-
 Node::Node(double _x, double _y)
-    : x(_x), y(_y), nw(-1), ne(-1), sw(-1), se(-1), isOcuppied(false)
+    : x(_x), y(_y), data(), nw(-1), ne(-1), sw(-1), se(-1), isOcuppied(false)
 {
 }
 
 Node::Node()
-    : x(0.0), y(0.0), nw(-1), ne(-1), sw(-1), se(-1), isOcuppied(false)
+    : x(0.0), y(0.0), data(), nw(-1), ne(-1), sw(-1), se(-1), isOcuppied(false)
 {
 }
 
 Node::~Node()
 {
-    
 }
 
 bool Node::insertStation(Station station)
 {
     try
     {
-        data = station;
+        data.setX(station.getX());
+        data.setY(station.getY());
+        data.setAddress(station.getAddress());
+        data.setId(station.getId());
         isOcuppied = true;
         return true;
     }
@@ -42,21 +34,10 @@ bool Node::insertStation(Station station)
         return false;
     }
 };
-
-bool Rect::contains(float x, float y)
+Node QuadTree::getNode(int nodeIndex)
 {
-
-    return x >= this->x - width && y >= this->y - height &&
-           x <= this->x + width && y <= this->y + height;
-}
-
-bool Rect::intersects(const Rect &r)
-{
-    return !(r.x + r.width < x ||
-             r.y + r.height < y ||
-             r.x > x + width ||
-             r.y > y + height);
-}
+    return qtnodes[nodeIndex];
+};
 
 void QuadTree::print()
 {
@@ -68,7 +49,7 @@ void QuadTree::print()
 // @param boundary: X,Y,width e height do retangulo do rootNode
 // @param capacity: capacidade maxima de cada Nó
 QuadTree::QuadTree(int quadTreeCapacity)
-    : capacity(quadTreeCapacity+1), size(1)
+    : size(1), capacity(quadTreeCapacity + 1)
 {
     qtnodes = new Node[capacity];
     for (int i = 0; i < capacity; i++)
@@ -93,12 +74,13 @@ bool QuadTree::insertInNode(int nodeIndex, Station station)
     if (!node.isOcuppied)
     {
         node.insertStation(station);
+        return true;
     }
     else
     {
+        // Chama recursao pro noroeste:
         if (station.getX() < node.data.getX() && station.getY() > node.data.getY())
         {
-            std::cout << "northWest" << std::endl;
             if (node.nw == -1) // Se o nó filho ainda não foi criado
             {
                 node.nw = size++;
@@ -106,10 +88,9 @@ bool QuadTree::insertInNode(int nodeIndex, Station station)
             }
             return insertInNode(node.nw, station);
         }
+        // Chama recursao pro nordeste:
         else if (station.getX() > node.data.getX() && station.getY() > node.data.getY())
         {
-            std::cout << "northEast" << std::endl;
-
             if (node.ne == -1)
             {
                 node.ne = size++;
@@ -117,10 +98,9 @@ bool QuadTree::insertInNode(int nodeIndex, Station station)
             }
             return insertInNode(node.ne, station);
         }
+        // Chama recursao pro sudoeste:
         else if (station.getX() < node.data.getX() && station.getY() < node.data.getY())
         {
-            std::cout << "southWest" << std::endl;
-
             if (node.sw == -1)
             {
                 node.sw = size++;
@@ -128,10 +108,9 @@ bool QuadTree::insertInNode(int nodeIndex, Station station)
             }
             return insertInNode(node.sw, station);
         }
+        // Chama recursao pro sudeste:
         else if (station.getX() > node.data.getX() && station.getY() < node.data.getY())
         {
-            std::cout << "southEast" << std::endl;
-
             if (node.se == -1)
             {
                 node.se = size++;
@@ -142,6 +121,7 @@ bool QuadTree::insertInNode(int nodeIndex, Station station)
         else
         {
             std::cerr << "Erro, nao foi possivel encontrar coordenadas para o nó especificado." << std::endl;
+            return false;
         }
     }
 }
