@@ -24,6 +24,7 @@ public:
 
 
   Station* getStations();
+  int getNumberOfStations();
 private:
   Station* stations;
   int numberOfStations;

@@ -1,52 +1,54 @@
 #ifndef QUADTREE_HPP
 #define QUADTREE_HPP
+#include "../include/QuadTree.hpp"
+#include "../include/Station.hpp"
 
-class Point
+class Rect
 {
     public:
-        Point(int _x,int _y);
-        int getX();
-        int getY();
-        void setX(int _x);
-        void setY(int _y);
-
-    private:
-        int x;
-        int y;
-};
-
-
-struct Node 
-{
-    Rect boundary;
-    Station* data;
-    int nw,ne,sw,se = -1;
-    bool isDivided = false;
-    int size = 0;
-};
-
-
-struct Rect 
-{
-    public:
+        Rect();
+        Rect(double x,double y,double width,double height);
         float x,y,width,height;
         bool contains(float x, float y);
         bool intersects(const Rect& r);
 
 };
 
+class Node 
+{
+    public:
+        Node();
+        ~Node();
+        Node(int capacity);
+        // Node(int capacity,Rect boundary);
+        Node(double _x,double _y);
+        bool insertStation(Station station);
+
+        double x,y;
+        Station data;
+        int nw,ne,sw,se = -1;
+        bool isOcuppied = false;
+};
+
 class QuadTree 
 {
     public:
-        QuadTree(const Rect& boundary, int capacity);
+        QuadTree(int quadTreeCapacity);
+        ~QuadTree();
         void insert(const Station& station);
         bool insertInNode(int nodeIndex, Station station);
         bool subDivide(int nodeIndex);
+        
+        void print();
+
+        void setCapacity(int _capacity);
+        int getCapacity();
 
     private:
         Rect boundary;
-        int capacity;
         Node* qtnodes;
+        int size;
+        int capacity;
 
 
 };

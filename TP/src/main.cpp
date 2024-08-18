@@ -1,5 +1,6 @@
 #include "../include/utils.hpp"
 #include "../include/Naive.hpp"
+#include "../include/Reformed.hpp"
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -21,84 +22,96 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    naivebiuaidi.getStationsFromFile(stationsDataFile);
+    // naivebiuaidi.getStationsFromFile(stationsDataFile);
+    // Station* stations = new Station[naivebiuaidi.getNumberOfStations()];
+    // stations = naivebiuaidi.getStations();
+    // // Arquivo de operações:
+    // char operation;
 
-    // Arquivo de operações:
-    char operation;
+    // std::string operationsDataPath = "../dados/geracarga.ev";
+    // int numberofOperations;
+    // std::string numberofOperationsString;
 
-    std::string operationsDataPath = "../dados/geracarga.ev";
-    int numberofOperations;
-    std::string numberofOperationsString;
+    // // Abrindo o arquivo de operações:
+    // std::ifstream operationsDataFile(operationsDataPath);
+    // if (!operationsDataFile.is_open())
+    // {
+    //     std::cerr << "Nao foi possivel abrir o arquivo indicado no caminho " << operationsDataPath;
+    //     return 1;
+    // }
+    // std::getline(operationsDataFile, numberofOperationsString);
+    // numberofOperations = std::stoi(numberofOperationsString) + 1;
+    // std::cin.rdbuf(operationsDataFile.rdbuf());
 
-    // Abrindo o arquivo de operações:
-    std::ifstream operationsDataFile(operationsDataPath);
-    if (!operationsDataFile.is_open())
-    {
-        std::cerr << "Nao foi possivel abrir o arquivo indicado no caminho " << operationsDataPath;
-        return 1;
-    }
-    std::getline(operationsDataFile, numberofOperationsString);
-    numberofOperations = std::stoi(numberofOperationsString) + 1;
-    std::cin.rdbuf(operationsDataFile.rdbuf());
+    // // Operações:
+    // for (int i = 0; i < numberofOperations; i++)
+    // {
+    //     std::cin >> operation;
+    //     // Calcular k vizinhos + proximos:
+    //     if (operation == 'C')
+    //     {
+    //         // Inicializa e recebe os dados da operação
+    //         double originX, originY;
+    //         int k;
 
-    // Operações:
-    for (int i = 0; i < numberofOperations; i++)
-    {
-        std::cin >> operation;
-        // Calcular k vizinhos + proximos:
-        if (operation == 'C')
-        {
-            // Inicializa e recebe os dados da operação
-            double originX, originY;
-            int k;
+    //         std::cin >> originX >> originY >> k;
+    //         ptr_knn_t kNearestNeighbours = new knn_t[k];
 
-            std::cin >> originX >> originY >> k;
-            ptr_knn_t kNearestNeighbours = new knn_t[k];
+    //         // calculateDistances(knn, stations, originX, originY, k, naive ou notNaive);
 
-            // calculateDistances(knn, stations, originX, originY, k, naive ou notNaive);
+    //         naivebiuaidi.calculateDistances(kNearestNeighbours, originX, originY, k);
 
-            naivebiuaidi.calculateDistances(kNearestNeighbours, originX, originY, k);
+    //         std::cout << std::fixed << std::setprecision(6);
+    //         // Printa a operação:
+    //         std::cout << operation << " " << originX << " " << originY << " " << k << std::endl;
 
+    //         // Printa o resultado:
+    //         for (int i = 0; i < k; i++)
+    //             kNearestNeighbours[i].print();
+    //         delete[] kNearestNeighbours;
+    //     }
+    //     // Desativar estação:
+    //     else if (operation == 'D')
+    //     {
+    //         // Recebe os dados da operação
+    //         std::string stationId;
+    //         std::cin >> stationId;
+    //         // Printa a operação:
+    //         std::cout << operation << " " << stationId<<std::endl;
 
-            std::cout << std::fixed << std::setprecision(6);
-            // Printa a operação:
-            std::cout << operation << " " << originX << " " << originY << " " << k << std::endl;
+    //         // Printa o resultado:
+    //         std::cout << naivebiuaidi.deactivateById(stationId) << std::endl;
+    //     }
+    //     // Ativar estação:
+    //     else if (operation == 'A')
+    //     {
+    //         // Recebe os dados da operação
+    //         std::string stationId;
+    //         std::cin >> stationId;
 
-            // Printa o resultado:
-            for (int i = 0; i < k; i++)
-                kNearestNeighbours[i].print();
-            delete[] kNearestNeighbours;
-        }
-        // Desativar estação:
-        else if (operation == 'D')
-        {
-            // Recebe os dados da operação
-            std::string stationId;
-            std::cin >> stationId;
-            // Printa a operação:
-            std::cout << operation << " " << stationId<<std::endl;
+    //         // Printa a operação:
+    //         std::cout << operation << " " << stationId<<std::endl;
 
-            // Printa o resultado:
-            std::cout << naivebiuaidi.deactivateById(stationId) << std::endl;
-        }
-        // Ativar estação:
-        else if (operation == 'A')
-        {
-            // Recebe os dados da operação
-            std::string stationId;
-            std::cin >> stationId;
+    //         // Printa o resultado:
+    //         std::cout << naivebiuaidi.activateById(stationId) << std::endl;
+    //     }
+    //     else
+    //     {
+    //         std::cerr << "Operacao não encontrada";
+    //     }
+    // }
 
-            // Printa a operação:
-            std::cout << operation << " " << stationId<<std::endl;
+    std::string numberOfStationsString;
 
-            // Printa o resultado:
-            std::cout << naivebiuaidi.activateById(stationId) << std::endl;
-        }
-        else
-        {
-            std::cerr << "Operacao não encontrada";
-        }
-    }
+    // Obtendo o numero de estacoes:
+    std::getline(stationsDataFile, numberOfStationsString);
+    int numberOfStations = std::stoi(numberOfStationsString);
+
+    Reformed biuaidireformed(numberOfStations);
+    biuaidireformed.getStationsFromFile(stationsDataFile);
+    // biuaidireformed.printQuadTree();
+    biuaidireformed.deactivateById("08777200075");
+    biuaidireformed.activateById("08098800057B");
 
     return (0);
 }

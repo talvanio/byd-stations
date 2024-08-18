@@ -154,3 +154,8 @@ Station *Naive::getStations()
 {
   return stations;
 };
+
+int Naive::getNumberOfStations() 
+{
+  return numberOfStations;
+}

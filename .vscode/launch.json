@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+      {
+          "name": "Debug with Make",
+          "type": "cppdbg",
+          "request": "launch",
+          "program": "${workspaceFolder}/TP/bin/run.out",  // Caminho para o executável gerado
+          "args": [],
+          "stopAtEntry": false,
+          "cwd": "${workspaceFolder}",  // Caminho para a pasta de trabalho
+          "environment": [],
+          "externalConsole": false,
+          "MIMode": "gdb",
+          "setupCommands": [
+              {
+                  "description": "Enable pretty-printing for gdb",
+                  "ignoreFailures": true,
+                  "text": "-enable-pretty-printing"
+              }
+          ],
+          "preLaunchTask": "build",  // Nome da tarefa para construir o projeto
+          "miDebuggerPath": "/usr/bin/gdb",
+          "logging": { "engineLogging": true }
+      }
+  ]
+}
